@@ -8,22 +8,27 @@
     <artifactId>FlinkTutorial</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
-        <flink-version>1.12.2</flink-version>
+        <flink-version>1.12.1</flink-version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-scala_2.11</artifactId>
+            <artifactId>flink-scala_2.12</artifactId>
             <version>${flink-version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-streaming-scala_2.11</artifactId>
+            <artifactId>flink-clients_2.12</artifactId>
             <version>${flink-version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-connector-kafka-0.11_2.11</artifactId>
+            <artifactId>flink-streaming-scala_2.12</artifactId>
+            <version>${flink-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-connector-kafka-0.11_2.12</artifactId>
             <version>1.11.3</version>
         </dependency>
     </dependencies>
