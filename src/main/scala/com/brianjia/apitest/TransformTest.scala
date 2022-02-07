@@ -18,11 +18,46 @@ object TransformTest {
       }
     )
 
+    // 2. stream based on the key
     val aggStream = dataStream
       .keyBy(_.id)
       .minBy("temperature")
 
-    aggStream.print()
+    // 3. reduce by current timestamp and get the current min temperature
+    val resultStream = dataStream.keyBy(_.id).reduce(
+      (curState, newData) =>
+        SensorReading(curState.id, newData.timestamp, curState.temperature.min(newData.temperature))
+    )
+
+    // 4. multiple stream
+    // 4.1 split stream (split the sensor reading into high/low streams)
+    val highStream = dataStream.filter(
+      data => data.temperature >= 30
+    )
+
+    val lowStream = dataStream.filter(
+      data => data.temperature < 30
+    )
+
+//    highStream.print("high")
+//    lowStream.print("low")
+
+    //4.2 connect
+    val warningStream = highStream.map(
+      data => (data.id, data.temperature)
+    )
+    val connectedStreams = warningStream
+      .connect(lowStream)
+    val coMapStream = connectedStreams
+      .map(
+        warningData => (warningData._1, warningData._2, "warning"),
+        lowTempData => (lowTempData.id, "healthy")
+      )
+
+//    coMapStream.print("coMap")
+
+    //4.3 union
+    val unionStream = highStream.union(lowStream)
 
     env.execute("transform")
   }
