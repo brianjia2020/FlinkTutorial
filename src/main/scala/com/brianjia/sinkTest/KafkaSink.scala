@@ -33,7 +33,7 @@ object KafkaSink {
 
     //2. sink to kafka
     dataStream.addSink(
-      new FlinkKafkaProducer011[String]("localhost:9092", "sinkTest", new SimpleStringSchema[String]())
+      new FlinkKafkaProducer011[String]("localhost:9092", "sinkTest", new SimpleStringSchema())
     )
 
     env.execute("fileSinkTest")
