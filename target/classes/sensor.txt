@@ -1,7 +1,0 @@
-sensor1,1,35.8
-sensor1,2,36.2
-sensor1,3,37.5
-sensor1,4,38.2
-sensor1,5,39.1
-sensor1,5,29
-sensor1,5,19

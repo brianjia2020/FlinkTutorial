@@ -1,5 +1,0 @@
-hello world
-hello flink
-hello scala
-how are you
-I am chunyang
