@@ -1,7 +1,14 @@
 package com.brianjia.apitest
 
+import org.apache.flink.api.common.functions.RichMapFunction
+import org.apache.flink.api.common.serialization.SimpleStringEncoder
 import org.apache.flink.api.scala.createTypeInformation
+import org.apache.flink.configuration
+import org.apache.flink.core.fs.Path
+import org.apache.flink.streaming.api.functions.sink.filesystem.StreamingFileSink
 import org.apache.flink.streaming.api.scala.{DataStream, StreamExecutionEnvironment}
+
+import java.lang.module.Configuration
 
 object TransformTest {
   def main(args: Array[String]): Unit = {
@@ -60,5 +67,21 @@ object TransformTest {
     val unionStream = highStream.union(lowStream)
 
     env.execute("transform")
+  }
+}
+
+
+class MyRichMap extends RichMapFunction[SensorReading, String] {
+
+  override def map(in: SensorReading): String = in.id + "temperature"
+
+  override def open(parameters: configuration.Configuration): Unit = {
+    // do some initialization stuff, set up database connection
+    getRuntimeContext()
+  }
+
+  override def close(): Unit = {
+    // do some clean up stuff, like clear cache or close database connection
+    getRuntimeContext()
   }
 }
