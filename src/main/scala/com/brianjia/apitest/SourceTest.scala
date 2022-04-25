@@ -15,6 +15,7 @@ object SourceTest {
   def main(args: Array[String]): Unit = {
     //create env
     val env = StreamExecutionEnvironment.getExecutionEnvironment
+    env.setParallelism(1)
 
     //1. read from a collection
     val dataList = List(
@@ -68,7 +69,7 @@ object SourceTest {
         )
 
         //wait for some time
-        Thread.sleep(100)
+        Thread.sleep(2000)
       }
     }
 
